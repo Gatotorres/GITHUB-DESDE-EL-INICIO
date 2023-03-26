@@ -124,6 +124,35 @@
     display: inline-block;
   }
 
+  .burguer-menu-mobile {
+    padding: 24px;
+  }
+  .burguer-menu-mobile a {
+    text-decoration: none;
+    color: var(--black);
+    font-weight: bold;
+    /* margin-bottom: 24px; */
+  }
+  .burguer-menu-mobile ul {
+    padding: 0;
+    margin: 24px 0 0;
+    list-style: none;
+  }
+  .burguer-menu-mobile ul:nth-child(1) {
+    border-bottom: 1px solid var(--very-light-pink);
+  }
+  .burguer-menu-mobile ul li {
+    margin-bottom: 24px;
+  }
+  .email {
+    font-size: var(--sm);
+    font-weight: 300 !important;
+  }
+  .sign-out {
+    font-size: var(--sm);
+    color: var(--hospital-green) !important;
+  }
+
 
   @media (max-width: 640px) {
     .menu {

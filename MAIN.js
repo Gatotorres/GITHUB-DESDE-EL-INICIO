@@ -1,17 +1,47 @@
-const NavMenuEmail = document.querySelector('.navbar-email');
-const DesktopMenu = document.querySelector('.desktop-menu');
+const iconBurguerMenu  = document.querySelector('.icon-burguer-menu');
+const burguerMenuMobile  = document.querySelector('.burguer-menu-mobile');
+const iconCarritoMenu = document.querySelector('.navbar-shopping-cart');
+const asideCarritoMenu = document.querySelector('.product-detail');
+const navMenuEmail = document.querySelector('.navbar-email');
+const desktopMenu = document.querySelector('.desktop-menu');
 
-NavMenuEmail.addEventListener('click', toggleDesktopMenu);
+navMenuEmail.addEventListener('click', toggleDesktopMenu);
+iconBurguerMenu.addEventListener('click', toggleBurguerMenu);
+iconCarritoMenu.addEventListener ('click', toggleAsideMenu);
+
 
 function toggleDesktopMenu () {
-    DesktopMenu.classList.toggle('inactive');
+    desktopMenu.classList.toggle('inactive');
+
+    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive')
+    const isAsideClosed = asideCarritoMenu.classList.contains('inactive');
+
+    if (!isBurgerMenuClosed || !isAsideClosed) {
+        burguerMenuMobile.classList.add('inactive');
+        asideCarritoMenu.classList.add('inactive');
+    }
 }
 
-const IconBurguerMenu  = document.querySelector('.icon-burguer-menu');
-const BurguerMenuMobile  = document.querySelector('.burguer-menu-mobile');
-
-IconBurguerMenu.addEventListener('click', toggleBurguerMenu);
-
 function toggleBurguerMenu () {
-    BurguerMenuMobile.classList.toggle('inactive');
+    burguerMenuMobile.classList.toggle('inactive');
+
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isAsideClosed = asideCarritoMenu.classList.contains('inactive');
+
+    if (!isDesktopMenuClosed || !isAsideClosed) {
+        desktopMenu.classList.add('inactive');
+        asideCarritoMenu.classList.add('inactive');
+    }
+}
+
+function toggleAsideMenu () {
+    asideCarritoMenu.classList.toggle('inactive');
+
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive')
+
+    if (!isDesktopMenuClosed || !isBurgerMenuClosed) {
+        desktopMenu.classList.add('inactive');
+        burguerMenuMobile.classList.add('inactive');
+    }
 }

@@ -1,32 +1,40 @@
-
-
-
-
-const iconBurguerMenu  = document.querySelector('.icon-burguer-menu');
-const burguerMenuMobile  = document.querySelector('.burguer-menu-mobile');
-const iconCarritoMenu = document.querySelector('.navbar-shopping-cart');
-const asideCarritoMenu = document.querySelector('.product-detail');
 const navMenuEmail = document.querySelector('.navbar-email');
+const iconBurguerMenu  = document.querySelector('.icon-burguer-menu');
+const iconCarritoMenu = document.querySelector('.navbar-shopping-cart');
 const desktopMenu = document.querySelector('.desktop-menu');
 
 
+const burguerMenuMobile  = document.querySelector('.burguer-menu-mobile');
+
+const shoppingCartContainer = document.getElementById('shoppingCartContainer');
+
 const cardsContainer = document.querySelector('.cards-container');
+
+const productDetail = document.getElementById('productDetail');
+
+const btnCloseProductDetail = document.querySelector('.aside-close');
+
 
 
 navMenuEmail.addEventListener('click', toggleDesktopMenu);
 iconBurguerMenu.addEventListener('click', toggleBurguerMenu);
-iconCarritoMenu.addEventListener ('click', toggleAsideMenu);
+iconCarritoMenu.addEventListener('click', toggleShoppingCartContainer);
+
+btnCloseProductDetail.addEventListener('click', closeProductDetail);
+
 
 
 function toggleDesktopMenu () {
     desktopMenu.classList.toggle('inactive');
 
-    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive')
-    const isAsideClosed = asideCarritoMenu.classList.contains('inactive');
+    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive');
+    const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
+    const isProductDetailClosed = productDetail.classList.toggle('inactive');
 
-    if (!isBurgerMenuClosed || !isAsideClosed) {
+    if (!isBurgerMenuClosed || !isAsideClosed || !isProductDetailClosed) {
         burguerMenuMobile.classList.add('inactive');
-        asideCarritoMenu.classList.add('inactive');
+        shoppingCartContainer.classList.add('inactive');
+        productDetail.classList.add('inactive');
     }
 }
 
@@ -34,25 +42,57 @@ function toggleBurguerMenu () {
     burguerMenuMobile.classList.toggle('inactive');
 
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
-    const isAsideClosed = asideCarritoMenu.classList.contains('inactive');
+    const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
+    const isProductDetailClosed = productDetail.classList.toggle('inactive');
 
-    if (!isDesktopMenuClosed || !isAsideClosed) {
+    if (!isDesktopMenuClosed || !isAsideClosed || !isProductDetailClosed) {
         desktopMenu.classList.add('inactive');
-        asideCarritoMenu.classList.add('inactive');
+        shoppingCartContainer.classList.add('inactive');
+        productDetail.classList.add('inactive');
     }
 }
 
-function toggleAsideMenu () {
-    asideCarritoMenu.classList.toggle('inactive');
+function toggleShoppingCartContainer () {
+    shoppingCartContainer.classList.toggle('inactive');
 
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
-    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive')
+    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive');
+    const isProductDetailClosed = productDetail.classList.toggle('inactive');
 
-    if (!isDesktopMenuClosed || !isBurgerMenuClosed) {
+    if (!isDesktopMenuClosed || !isBurgerMenuClosed || !isProductDetailClosed) {
         desktopMenu.classList.add('inactive');
         burguerMenuMobile.classList.add('inactive');
+        productDetail.classList.add('inactive');
     }
 }
+
+function openProductDetail() {
+    productDetail.classList.remove('inactive');
+  
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isBurgerMenuClosed = burguerMenuMobile.classList.contains('inactive');
+    const isAsideClosed = shoppingCartContainer.classList.contains('inactive');
+    const isProductDetailClosed = productDetail.classList.contains('inactive');
+  
+    if (!isDesktopMenuClosed || !isBurgerMenuClosed || !isAsideClosed) {
+      desktopMenu.classList.add('inactive');
+      burguerMenuMobile.classList.add('inactive');
+      shoppingCartContainer.classList.add('inactive');
+      productDetail.classList.remove('inactive');
+    }
+  } 
+
+
+function closeProductDetail () {
+    productDetail.classList.toggle('inactive');
+
+    if (!isProductDetailClosed) {
+        productDetail.classList.add('inactive');
+    }
+}
+
+
+// aca creamos los productos manualmente pero facilmente de sustituir por info real //
 
 const productList = [] ;
 productList.push({
@@ -60,7 +100,7 @@ productList.push({
     price: 620,
     image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 
-});
+ });
 productList.push({
     name: 'TV',
     price: 220,
@@ -74,12 +114,12 @@ productList.push({
 
 });
 productList.push({
-    name: 'soft sofa & piano',
+    name: 'Soft sofa',
     price: 18900,
-    image: 'https://lh3.googleusercontent.com/6q0zfLCWFCq9-ENcIyc1oJGf1yzAOMR7VQRo1PYARzhhzCVDKn-1NAUF3ku_jnKpi-01haI_FmNR-fQAa40kF_boZMd65ZBm6h88smA'
+    image: 'https://cdn.pixabay.com/photo/2017/09/09/18/25/living-room-2732939_960_720.jpg'
 })
 productList.push({
-    name: 'table lamp + nightstand',
+    name: 'Table lamp + Nightstand',
     price: 220,
     image: 'https://cdn.pixabay.com/photo/2017/10/23/22/01/living-2882718_1280.jpg'
 
@@ -109,7 +149,11 @@ function renderProducts (arr) {
     // y hacemos referencia al valor .IMAGE que está dentro del objeto//
     
     const imgProduct = document.createElement('img');
-    imgProduct.setAttribute('src', product.image);
+    imgProduct.src = product.image;
+
+    //aca creamos un EventListener para escuchar cuando los usuarios clickan para ver foto //
+
+    imgProduct.addEventListener('click', openProductDetail);
 
     //Acá vamos a crear otro div y agregarle la clase .product-Info//
 
@@ -163,3 +207,59 @@ function renderProducts (arr) {
 }
 
 renderProducts(productList);
+
+/*  ACA INTENTO HACER MAS INTERACTIVA LA PAGINA AÑADIENDOLE QUE AL PRESIONAR UNA IMAGEN
+ EL ASIDE SE ABRA CORRESPONDIENTE A LA IMAGEN SELECICONADA
+
+
+     const asideRenderImg = querySelector('aside');
+    
+    asideRenderImg.setAttribute('id', 'productDetail');
+    asideRenderImg.classList.add('inactive')
+
+    const divRenderImg = document.createElement('div');
+    divRenderImg.classList.add('aside-close');
+
+    const imgCloseProductDetail = document.createElement('img');
+    imgCloseProductDetail.setAttribute('src', './icons/icon_close.png');
+    imgCloseProductDetail.setAttribute('alt', 'close');
+
+    const imgRenderProductDetail = document.createElement('img');
+    imgRenderProductDetail.setAttribute('src', product.image);
+
+    const divProductInfoRender = document.createElement('div');
+    divProductInfoRender.classList('product-info');
+
+    const pDivPrecio = document.createElement(product.price);
+    
+    const pDivName = document.createElement(product.name);
+
+    const pDivTextInfo = document.createElement('p');
+    pDivTextInfo.innerText('aca dabe ir el texto descriptivo en cada imagen. ah re seco. <b> no pero en serio, comprame el producto hijod·#***');
+
+    const btnDivProductDetail = document.createElement('button');
+    btnCloseProductDetail.classList.add('primary-button add-to-cart-button');
+
+    const imgBtnCartAdd = document.createElement('img');
+    imgBtnCartAdd.setAttribute('src', './icons/bt_add_to_cart.svg');
+
+    const parraphAddToCart = document.createElement('p');
+    parraphAddToCart.innerText('Add To Cart');
+
+    // ahora viene la parte de unir todo dentro de un mismo objeto //
+
+    productCardAside.appendChild(divRenderImg);
+    productCardAside.appendChild(imgRenderProductDetail);
+    productCardAside.appendChild(divProductInfoRender);
+
+    divRenderImg.appendChild('imgCloseProductDetail');
+
+    divProductInfoRender.appendChild(pDivPrecio);
+    divProductInfoRender.appendChild(pDivName);
+    divProductInfoRender.appendChild(pDivTextInfo);
+    divProductInfoRender.appendChild(btnDivProductDetail);
+
+    btnDivProductDetail.appendChild(imgBtnCartAdd);
+    btnDivProductDetail.appendChild(parraphAddToCart);
+
+    asideRenderImg.appendChild(productCardAside); */
